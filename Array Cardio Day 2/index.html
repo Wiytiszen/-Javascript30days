@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array Cardio Day 2</title>
+</head>
+<body>
+<script>
+  const songs = [
+    {text:'Living la vida loca' ,id: 123},
+    {text:'I bet that you look good on the dancefloor' ,id:456},
+    {text:'Havana',id:678},
+    {text:'These days' ,id:901}
+  ];
+
+  let song = songs.some(song => song.id > 999);
+  	console.log(song);
+  let songName = songs.every(song => song.text == 'Havana');
+  	console.log(songName);
+
+</script>
+</body>
+</html>

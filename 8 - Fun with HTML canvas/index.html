@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fun with HTML Canvas</title>
+  <style>
+    html,body{
+      width: 100vh;
+     
+    }
+    
+  </style>
+</head>
+<body>
+  <button id="reset">Clear Canvas</button>
+  <button id="rubber">Rubber</button>
+  <canvas id="myCanvas"></canvas>
+<script>
+  let lastX;
+  let lastY;
+  let lastColor = [10,10,10];
+  let clearCanvas = document.getElementById("reset");
+  let rubber = document.getElementById("rubber");
+  let canvas = document.getElementById("myCanvas");
+  let ctx = canvas.getContext("2d");
+  
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let drawing = false;
+  let lastWidth = 10;
+  let color = 0;
+  let erase = false;
+
+  rubber.addEventListener('click',isRubber);
+  clearCanvas.addEventListener('click',resetCanvas);
+  canvas.addEventListener('mousemove',isDrawing);
+  canvas.addEventListener('mousedown',(e)=>{
+    drawing =true;
+    [lastX,lastY]=[e.clientX,e.clientY];
+  });
+  canvas.addEventListener('mouseup',()=> drawing=false);
+  canvas.addEventListener('mouseout',()=> drawing=false);
+  function isRubber(){
+    if(erase){
+      erase= false;
+      rubber.innerText = "Rubber";
+    }else{
+      erase = true;
+      rubber.innerText = "Draw";
+
+    }
+  }
+  function resetCanvas(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if(erase == true){
+      rubber.click();
+    }
+  }
+  function getRandomColor() {
+    (color >= 360)? color =0 : color++;
+      return `hsl(${color}, 100%, 50%)`;
+  }
+  function isDrawing(e){   
+    if(drawing && !erase){ 
+      (lastWidth > 70)? lastWidth =10 : lastWidth +=.5;
+      ctx.beginPath();
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.lineWidth = lastWidth;
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(e.clientX,e.clientY);
+      ctx.strokeStyle =getRandomColor();
+      ctx.stroke();
+      [lastX,lastY]=[e.clientX,e.clientY];
+    }
+    if(drawing && erase){ 
+      lastWidth =40;
+      ctx.beginPath();
+      ctx.lineJoin = "round";
+      ctx.lineCap = "square";
+      ctx.lineWidth = lastWidth;
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(e.clientX,e.clientY);
+      ctx.strokeStyle ='rgb(256,256,256)';
+      ctx.stroke();
+      [lastX,lastY]=[e.clientX,e.clientY];
+    }
+
+  }
+  
+</script>
+</body>
+</html>

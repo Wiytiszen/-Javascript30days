@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul id="lista">
+
+  </ul>
+
+  <form class="addItems">
+    <input type="text" name="name" placeholder ="Nombre" required>
+    <input type="text" name="edad" placeholder ="Edad" required>
+    <input type="checkbox" name="real" onclick={console.log(this.checked)}>
+    <input type="submit" value ="+ Add item">
+  </form>
+
+  <script>
+    
+    let items =  document.querySelector('.addItems');
+    let ul =  document.getElementById('lista');
+    items.addEventListener('submit',addItemToList);
+    const personas = JSON.parse(localStorage.getItem("personas"));// ||[];
+    loadList(personas);
+    
+    // personas.push({nombre:'Ramiro',edad:20});
+    // personas.push({nombre:'Martin',edad:33});
+    // personas.push({nombre:'Carlos',edad:50});
+    // console.table(personas);
+
+    // personas.forEach(p => {
+    //   let node = document.createElement("li");
+    //   let ul =  document.getElementById('lista');
+    //   let elemento = document.createTextNode(`Este es ${p.nombre} y tiene ${p.edad}`);
+    //   node.appendChild(elemento);
+    //   ul.appendChild(node);
+    // });  
+    
+
+    function addItemToList(e){
+      e.preventDefault();
+      let newItem = {
+        nombre:this.name.value,
+        edad:this.edad.value,
+        real:this.real.checked
+      }
+      personas.push(newItem);
+      console.log(personas);
+      this.name.value = '';
+      this.edad.value = '';
+      this.real.value = false;
+      loadList(personas)
+    }
+    function loadList(listaDePersonas){
+      let ul =  document.getElementById('lista').innerHTML ='';
+      listaDePersonas.forEach(p => {
+      let node = document.createElement("li");
+      let ul =  document.getElementById('lista');
+      let elemento = document.createTextNode(`Este es ${p.nombre} y tiene ${p.edad} y ${(p.real)?'es real':'es imaginario'}`);
+      node.appendChild(elemento);
+      node.add.setAttribute("data-id", personas.length);
+      ul.appendChild(node);
+      })
+    }
+    window.onbeforeunload = closingCode;
+    function closingCode(){
+    // do something...
+    localStorage.setItem('personas',JSON.stringify(personas))
+    }
+  </script>
+</body>
+</html>

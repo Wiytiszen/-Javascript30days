@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konami Code Project</title>
+  <style>
+    .hide{
+      visibility: hidden;
+    }
+  </style>
+</head>
+<script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+<body>
+  <div class="secretMessage">
+    <p> Secret Code Activated </p>
+  </div>
+  <script>
+  let secretCode = 'debora'; 
+  let code=[]; 
+    let message = document.querySelector('.secretMessage');
+    message.classList.add('hide');
+
+  window.document.addEventListener('keypress', logKey);
+
+function logKey(e) {
+  code=[...code,e.key];
+  code.splice(-secretCode.length -1,code.length-secretCode.length);
+  let result = code.join('');
+  console.log('%c'+result, 'background: #222; color: #bada55');
+  if(result.includes(secretCode)){
+      message.classList.remove('hide');
+      cornify_add();
+      code = [];
+      
+  }
+  
+  
+}
+  </script>
+</body>
+</html>

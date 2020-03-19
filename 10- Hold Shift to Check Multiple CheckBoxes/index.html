@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Ten</title>
+  <style>
+    html,body{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgb(73, 55, 153);
+    }
+    .container{
+      display: flex;
+      flex-direction: column;
+
+      align-self: center;
+      width: 500px;
+      background: rgb(229, 227, 240);
+      justify-content: center;
+
+    }
+    .item{
+      border: 1px solid rgba(58, 57, 57,.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    input{
+      float: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container"> 
+    <div class="item">
+      <input type="checkbox">
+      <p>Texto Falso</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Texto Falso</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Texto Falso</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Texto Falso</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Texto Falso</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Texto Falso</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Texto Falso</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Texto Falso</p>
+    </div>
+  </div>
+  <script>
+    let firstCheck = null;
+    let lastCheck = null;
+    let checks = Array.from(document.querySelectorAll('.item input[type= "checkbox"]'));
+    checks.forEach(check => {
+      check.addEventListener('click', selected);
+    });
+  function selected(){
+    (!firstCheck)? firstCheck = checks.indexOf(this) : lastCheck = checks.indexOf(this)
+    if(lastCheck){
+      if(firstCheck - lastCheck < 0){
+        checks.forEach(item =>{
+          if(checks.indexOf(item)>= firstCheck && checks.indexOf(item) <= lastCheck){
+            item.checked ="true";
+          }
+        });
+      }else{
+        checks.forEach(item =>{
+          if(checks.indexOf(item)<= firstCheck && checks.indexOf(item) >= lastCheck){
+            item.checked ="true";
+          }
+        });
+      }
+    }
+  }
+    
+  </script>
+</body>
+</html>
